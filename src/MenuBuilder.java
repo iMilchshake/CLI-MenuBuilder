@@ -11,22 +11,21 @@ public class MenuBuilder {
 
 	public static void main(String[] args) throws Exception {
 
-		//Example on how to use this Class
+		//Example on how to use this class
 		String[] subMenuEntries = { "[1] Start", "[2] Options", "[3] Exit" };
-		System.out.println(BuildMenu("Java CLI MenuBuilder", subMenuEntries, "standard.flf", 2, 1, 1, 0, 0));
+		System.out.println(BuildMenu("MenuBuilder", subMenuEntries, "fonts/standard.flf", 2, 1, 1, 0, 0));
 	}
 
 	/**
 	 * @param Text The Bannertext
 	 * @param menuEntries Array with the submenu entries (leave this empty if you dont want to display a submenu)
-	 * @param font name of the font (*.flf)
+	 * @param font direction of the font (*.flf)
 	 * @param borderGapBannerX Gap between Border and Banner (X)
 	 * @param borderGapBannerY Gap between Border and Banner (Y)
 	 * @param borderGapMenuX Gap between Border and Menu (X)
 	 * @param borderGapMenuY Gap between Border and Menu (Y)
 	 * @param MenuTextGap Gap between Menu entries
 	 * @return String with the whole Menu
-	 * @throws Exception Exception
 	 */
 	public static String BuildMenu(String Text, String[] menuEntries, String font, int borderGapBannerX,
 			int borderGapBannerY, int borderGapMenuX, int borderGapMenuY, int MenuTextGap) throws Exception {
