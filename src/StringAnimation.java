@@ -32,32 +32,13 @@ public class StringAnimation {
 				+ "Remember my keen words whilst we're apart.";
 
 		long start = System.currentTimeMillis();
-		PrintCrossoverTransition(GenerateScrambledString(txt4), txt4, 0.5f, 1f);
+		PrintCrossoverTransition(GenerateScrambledString(txt4), txt4, 1, 5);
 		long finish = System.currentTimeMillis();
 		System.err.print("elapsed :"+(finish - start)/1000f);
 		String[] tmp = SplitString(txt);
-
-//		for (String s : tmp) {
-//			// System.out.print(s);
-//
-//			for (int i = 0; i < s.length(); i++) {
-//				System.out.print(RandomChar());
-//				TimeUnit.MILLISECONDS.sleep(1);
-//			}
-//
-//			System.out.print("\r"); // reset cursor
-//
-//			for (int i = 0; i < s.length(); i++) {
-//				System.out.print(s.charAt(i));
-//				TimeUnit.MILLISECONDS.sleep(4);
-//			}
-//
-//			System.out.print("\n");
-//		}
-//			TimeUnit.MILLISECONDS.sleep(100);
 	}
 
-	public static void PrintCrossoverTransition(String from, String to, float time, float ratio) throws Exception {
+	public static void PrintCrossoverTransition(String from, String to, int fromWait, int toWait) throws Exception {
 
 		String[] fromLines = SplitString(from);
 		String[] toLines = SplitString(to);
@@ -66,15 +47,6 @@ public class StringAnimation {
 			throw new Exception("Strings must have the same length and same amount of lines!");
 		}
 
-		int fromWait = (int) ((time / (2 * from.length())) * ratio * 1000000f);
-		int toWait = (int) (-1 * (time / (2 * to.length())) * (ratio - 2f) * 1000000f);
-
-		System.err.println((float)fromWait*2*from.length()/1000000f);
-		
-		System.out.println(from.length() + " - " + to.length());
-		System.out.println(fromWait + " - " + toWait);
-
-		// for (String s : fromLines) {
 		for (int l = 0; l < fromLines.length; l++) {
 
 			// Print 'From'-Line
@@ -119,24 +91,24 @@ public class StringAnimation {
 
 	public static char RandomChar() {
 		Random rnd = new Random();
-		return (char) (rnd.nextInt(89) + 33); //Random
+		return (char) (rnd.nextInt(89) + 33); // Random
 	}
 
 	public static void clearScreen() throws InterruptedException, IOException {
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 	}
 
-	public final static void clearConsole() {
-		try {
-			final String os = System.getProperty("os.name");
-
-			if (os.contains("Windows")) {
-				Runtime.getRuntime().exec("cls");
-			} else {
-				Runtime.getRuntime().exec("clear");
-			}
-		} catch (final Exception e) {
-			// Handle any exceptions.
-		}
-	}
+//	public final static void clearConsole() {
+//		try {
+//			final String os = System.getProperty("os.name");
+//
+//			if (os.contains("Windows")) {
+//				Runtime.getRuntime().exec("cls");
+//			} else {
+//				Runtime.getRuntime().exec("clear");
+//			}
+//		} catch (final Exception e) {
+//			// Handle any exceptions.
+//		}
+//	}
 }
