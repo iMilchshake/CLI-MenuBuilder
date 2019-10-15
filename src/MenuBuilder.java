@@ -1,8 +1,10 @@
+import java.io.Console;
+
 import jfiglet.FigletFont;
 
 /**
- * Java CLI-MenuBuilder
- * A Java Class that automatically generates a Command Line Menu using Java Figlet(jfiglet) by lalyos https://github.com/lalyos/jfiglet
+ * Java CLI-MenuBuilder A Java Class that automatically generates a Command Line
+ * Menu using Java Figlet(jfiglet) by lalyos https://github.com/lalyos/jfiglet
  * 
  * @author Tobias Schneider (https://github.com/iMilchshake)
  * @version 1.1
@@ -11,31 +13,35 @@ public class MenuBuilder {
 
 	public static void main(String[] args) throws Exception {
 
-		//Example on how to use this class
+		// Example on how to use this class
 		String[] subMenuEntries = { "[1] Start", "[2] Options", "[3] Exit" };
-		System.out.println(BuildMenu("MenuBuilder", subMenuEntries, "fonts/standard.flf", 2, 1, 1, 0, 0));
+		System.out.print(BuildMenu("Menu Builder", subMenuEntries, "fonts/standard.flf", 2, 1, 1, 0, 0));
 	}
 
 	/**
-	 * @param Text The Bannertext
-	 * @param menuEntries Array with the submenu entries (leave this empty if you dont want to display a submenu)
-	 * @param font direction of the font (*.flf)
+	 * @param Text             The Bannertext
+	 * @param menuEntries      Array with the submenu entries (leave this empty if
+	 *                         you dont want to display a submenu)
+	 * @param font             direction of the font (*.flf)
 	 * @param borderGapBannerX Gap between Border and Banner (X)
 	 * @param borderGapBannerY Gap between Border and Banner (Y)
-	 * @param borderGapMenuX Gap between Border and Menu (X)
-	 * @param borderGapMenuY Gap between Border and Menu (Y)
-	 * @param MenuTextGap Gap between Menu entries
+	 * @param borderGapMenuX   Gap between Border and Menu (X)
+	 * @param borderGapMenuY   Gap between Border and Menu (Y)
+	 * @param MenuTextGap      Gap between Menu entries
 	 * @return String with the whole Menu
 	 */
 	public static String BuildMenu(String Text, String[] menuEntries, String font, int borderGapBannerX,
 			int borderGapBannerY, int borderGapMenuX, int borderGapMenuY, int MenuTextGap) throws Exception {
 
 		// SETTINGS:
-		char[] border_symbs = {'X','X','X','└','X','│','┌','├','X','┘','─','X','┐','X','┬','X'}; // X = No valid character known
+		char[] border_symbs = { 'X', 'X', 'X', '└', 'X', '│', '┌', '├', 'X', '┘', '─', 'X', '┐', 'X', '┬', 'X' }; // X =
+																													// No
+																													// valid
+																													// character
+																													// known
 		int border = 1; // bordersize, not implemented. DO NOT CHANGE
 
 		// Create Figlet-Text (Banner)
-//		String figletString = FigletFont.convertOneLine("classpath:/" + fontname, Text); // Create Figlet Text
 		String figletString = FigletFont.convertOneLine(font, Text); // Create Figlet Text
 		figletString = figletString.replaceAll("[\n\r]+", "\n"); // Get Rid of Empty Lines
 		figletString = figletString.replaceAll("\n[ \t]*\n", "\n"); // Get Rid of Empty Lines
@@ -73,14 +79,17 @@ public class MenuBuilder {
 			}
 
 			for (int a = 0; a < (subMenuTextWidth + 1) * MenuTextGap; a++) // add x empty rows after each entry
-				subMenuString += 'x';
+				subMenuString += ' ';
 		}
 
 		// Calculate overall Size of Grid
 		int bannerHeight = rows + border * 2 + borderGapBannerY * 2;
 		int gridWidth = maxCollumns + border * 2 + borderGapBannerX * 2;
-		int gridHeight = bannerHeight + Math
-				.max(menuEntries.length + ((menuEntries.length - 1) * MenuTextGap) + borderGapMenuY * 2 + border, 0);
+		int gridHeight = bannerHeight;
+
+		if (menuEntries.length > 0) // if there are menuEntries add the area to the grid
+			gridHeight += Math.max(
+					menuEntries.length + ((menuEntries.length - 1) * MenuTextGap) + borderGapMenuY * 2 + border, 0);
 
 		// create Grid
 		int[][] grid = new int[gridWidth][gridHeight]; // 0 empty, 1 border, 2 banner-text, 3 submenu-text [X,Y]
@@ -98,7 +107,7 @@ public class MenuBuilder {
 						grid[x][y] = 0;
 					else
 						grid[x][y] = 2;
-				} else { // SUB MENU AREA
+				} else if (menuEntries.length > 0) { // SUB MENU AREA
 					if (x < border
 							|| (y >= gridHeight - border && x < subMenuTextWidth + border * 2 + borderGapMenuX * 2)
 							|| x == subMenuTextWidth + border * 2 + borderGapMenuX * 2)
@@ -111,6 +120,8 @@ public class MenuBuilder {
 						grid[x][y] = 3;
 					else
 						grid[x][y] = 0;
+				} else { // Would be Sub Menu Area but there are no entries
+					grid[x][y] = 0;
 				}
 			}
 		}
@@ -146,14 +157,28 @@ public class MenuBuilder {
 		return output;
 	}
 
+	/**
+	 * For when a User should enter a hidden String (Password)
+	 */
+	public static String RequestSecret(Console console, String request_text) {
+		return new String(console.readPassword(request_text));
+	}
+	
+	/**
+	 * For when a User should enter a visible String
+	 */
+	public static String RequestPublic(Console console, String request_text) {
+		 return console.readLine(request_text);
+	}
+	
 	private static int getSymbNumber(boolean up, boolean right, boolean down, boolean left) {
-		//convert booleans to numbers
+		// convert booleans to numbers
 		int u = up ? 1 : 0;
 		int r = right ? 1 : 0;
 		int d = down ? 1 : 0;
 		int l = left ? 1 : 0;
-		
-		return u*1+r*2+d*4+l*8; //every possible combination represents another number
+
+		return u * 1 + r * 2 + d * 4 + l * 8; // every possible combination represents another number
 	}
 
 }

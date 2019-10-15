@@ -17,25 +17,10 @@ public class StringAnimation {
 			+ "a highly saline-concentrated solution that drips out of the body from the tip of the beak.";
 
 	public static void main(String[] args) throws Exception {
-
-		String txt2 = "TeamViewer:\r\n" + "id: sickUSerNamexD23\r\n" + "pw: /ah38ah38Ha3\r\n" + "\r\n" + "Skyp3\r\n"
-				+ "user: oldmcdonnald\r\n" + "pw: hatnefarm123\r\n" + "\r\n" + "Teamspeak5xd\r\n"
-				+ "lel: ich bin ein baum\r\n" + "user: helo\r\n" + "pw: existerit nicht????";
-
-		String txt = "Ode to the Chimpanzee\n" + "A Sonnet by yeet\n" + "My chimpanzee, you inspire me to write.\n"
-				+ "I love the way you cuddle, prowl and chirp,\n" + "Invading my mind day and through the night,\n"
-				+ "Always dreaming about the intense hjerpe.\n" + "\n" + "Let me compare you to a furry moon?\n"
-				+ "You are more chemic, nocturnal and plump.\n" + "Calm sun heats the blurry peaches of June,\n"
-				+ "And summertime has the menacing jump.\n" + "\n" + "How do I love you? Let me count the ways.\n"
-				+ "I love your dense elbows, lip and elbows.\n" + "Thinking of your vernal lip fills my days.\n"
-				+ "My love for you is the tense pantyhose.\n" + "\n" + "Now I must away with a hirsute heart,\n"
-				+ "Remember my keen words whilst we're apart.";
-
 		long start = System.currentTimeMillis();
-		PrintCrossoverTransition(GenerateScrambledString(txt4), txt4, 1, 5);
+		PrintCrossoverTransition(GenerateScrambledString(txt4), txt4, 5,5);
 		long finish = System.currentTimeMillis();
 		System.err.print("elapsed :"+(finish - start)/1000f);
-		String[] tmp = SplitString(txt);
 	}
 
 	public static void PrintCrossoverTransition(String from, String to, int fromWait, int toWait) throws Exception {
@@ -44,7 +29,7 @@ public class StringAnimation {
 		String[] toLines = SplitString(to);
 
 		if (from.length() != to.length() || fromLines.length != toLines.length) {
-			throw new Exception("Strings must have the same length and same amount of lines!");
+			throw new Exception("Strings must have the same length and same amount of lines!"+from.length()+" "+to.length()+" "+fromLines.length+" "+toLines.length);
 		}
 
 		for (int l = 0; l < fromLines.length; l++) {
@@ -73,6 +58,8 @@ public class StringAnimation {
 		String[] lines = input.split("\r\n|\r|\n");
 		for (String s : lines) {
 			s = s.replaceAll("\n", "");
+			s = s.replaceAll("\r", "");
+			s = s.replaceAll("\r\n", "");
 		}
 		return lines;
 	}
@@ -83,6 +70,8 @@ public class StringAnimation {
 		for (int i = 0; i < input.length(); i++) {
 			if (input.charAt(i) == '\n')
 				output += '\n';
+			else if(input.charAt(i) == '\r')
+				output += '\r';
 			else
 				output += RandomChar();
 		}
@@ -97,18 +86,4 @@ public class StringAnimation {
 	public static void clearScreen() throws InterruptedException, IOException {
 		new ProcessBuilder("cmd", "/c", "cls").inheritIO().start().waitFor();
 	}
-
-//	public final static void clearConsole() {
-//		try {
-//			final String os = System.getProperty("os.name");
-//
-//			if (os.contains("Windows")) {
-//				Runtime.getRuntime().exec("cls");
-//			} else {
-//				Runtime.getRuntime().exec("clear");
-//			}
-//		} catch (final Exception e) {
-//			// Handle any exceptions.
-//		}
-//	}
 }
